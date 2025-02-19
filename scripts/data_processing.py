@@ -1,13 +1,14 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, sum, count
+import pandas as pd
 
 #Realizando transformações e agregações nos dados limpos
 
-spark = SparkSession.builder.appName("RetailSalesProcessing").getOrCreate()
+spark = SparkSession.builder.config("spark.driver.host","localhost").appName("RetailSalesProcessing").getOrCreate()
 
 #Carregando dados limpos
 
-spark = spark.read.csv("data/cleaned_sales", header=True, inferSchema=True)
+cleaned_df = spark.read.csv("data/cleaned_sales.csv", header=True, inferSchema=True)
 
 #Adicionando coluna total de vendas
 
@@ -26,10 +27,30 @@ sales_by_customer = cleaned_df.groupBy("Customer ID").agg(
     sum("Total Sale").alias("Total Sales"),
     count("Transaction Id").alias("Transaction Count"))
 
-#Salvando resultados
+#Convertendo DF para Pandas
 
-sales_by_category.write.mode("overwrite").csv("output/sales_by_category", header=True)
-sales_by_customer.write.mode("overwrite").csv("output/sales_by_customer", header=True)
+sales_by_category_pd = sales_by_category.toPandas()
+
+sales_by_customer_pd = sales_by_customer.toPandas()
+
+#Salvando os arquivos em tabelas
+
+try:
+
+    sales_by_category_pd.to_csv("data/sales_by_category.csv", index=False)
+    print("Arquivo salvo com sucesso!")
+
+except:
+    print("Erro! Permissão negada!")
+
+
+try:
+
+    sales_by_customer_pd.to_csv("data/sales_by_costumer.csv", index=False)
+    print("Arquivo salvo com sucesso!")    
+
+except:
+    print("Erro! Permissão negada!")
 
 #Exibindo resultados
 

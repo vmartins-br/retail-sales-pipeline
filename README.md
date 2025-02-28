@@ -26,6 +26,7 @@ O objetivo deste projeto é:
 
 ## Estrutura do Projeto
 retail-sales-pipeline/
+  
   │
   
   ├── data/

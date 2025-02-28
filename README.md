@@ -27,18 +27,34 @@ O objetivo deste projeto é:
 ## Estrutura do Projeto
 retail-sales-pipeline/
   │
+  
   ├── data/
+  
   │ ├── retail_store_sales_dirty.csv # Dataset original (dados sujos)
+  
   │ ├── cleaned_sales/ # Dados limpos (gerados pelo script)
+  
   │ └── sales_by_category/ # Agregações por categoria (geradas pelo script)
+  
   │
+  
   ├── notebooks/
+  
   │ └── analysis.ipynb # Notebook para análise e visualização
+  
   │
+  
   ├── scripts/
+  
   │ ├── data_cleaning.py # Script para limpeza dos dados
+  
   │ ├── data_processing.py # Script para transformações e agregações
+  
   │ └── data_loading.py # Script para carregar dados no SQL Server  
+  
   │
+  
   ├── README.md # Documentação do projeto
+  
   └── requirements.txt # Dependências do projeto
+
